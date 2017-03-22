@@ -1,6 +1,6 @@
+package SQLBuilder;
+
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 通用的c
