@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 然 on 2017/3/20.
+ * Created by 然 on 2017/3/23.
  */
-public  class CURDInsert extends AbstractCURD {
-
+public class CURDUpdate extends AbstractCURD {
     private String tableName;
     /**
      * 字段名称
@@ -23,10 +22,11 @@ public  class CURDInsert extends AbstractCURD {
      */
     private List<Object> valueList=new ArrayList<Object>();
     /**
-     * 构造方法
+     * 把属性和值分开放
+     *
      * @param fileds
      */
-    public CURDInsert(Map<String, Object> fileds) {
+    public CURDUpdate(Map<String, Object> fileds) {
         super(fileds);
         this.tableName= (String) fileds.get("tableName");
         for (Map.Entry<String, Object> entry : fileds.entrySet()) {
@@ -36,7 +36,6 @@ public  class CURDInsert extends AbstractCURD {
             this.valueList.add(value);
         }
     }
-
     /**
      * 语句生产的类，生成各种对应关系的语句段落
      * @return
@@ -44,16 +43,9 @@ public  class CURDInsert extends AbstractCURD {
     public CommonCURDBuilder commonCURDBuilder(){
         return new CommonCURDBuilder(filedsList);
     }
+    public String getUpdate(Map<String,Object> map){
+        StringBuilder correspondingSQRelationSQL=commonCURDBuilder().correspondingSQRelationSQL();
 
-    /**
-     * 返回insert语句
-     * @param fileds
-     * @return
-     */
-    public String getInsert(Map<String, Object> fileds) {
-        StringBuilder filedsSQl=commonCURDBuilder().filedsSQl();
-        StringBuilder andSQL=commonCURDBuilder().insertValuesSQL();
-        return sql
-                .INSERT_INTO(tableName+" ("+filedsSQl.toString()+") VALUES("+andSQL.toString()+")").toString();
+        return sql.UPDATE(tableName).SET(correspondingSQRelationSQL.toString()).WHERE("1=1").toString();
     }
 }

@@ -34,7 +34,7 @@ public class CommonCURDBuilder {
     }
 
     /**
-     * 构建一一对应的and sql语句 如 user=#{user} AND pwd=#{pwd}
+     * 构建一一对应的and sql语句 如 user=#{user} , pwd=#{pwd}
      * @return
      */
     public StringBuilder correspondingSQRelationSQL() {
@@ -44,7 +44,7 @@ public class CommonCURDBuilder {
                 sb.append(filedsList.get(i) + "=#{" + filedsList.get(i) + "}");
             }
             else {
-                sb.append(filedsList.get(i) + "=#{" + filedsList.get(i) + "} AND ");
+                sb.append(filedsList.get(i) + "=#{" + filedsList.get(i) + "} , ");
             }
         }
         return sb;
